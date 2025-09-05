@@ -9,20 +9,20 @@ try {
     // Sets PHPMailer to use SMTP protocol for sending emails instead of the default mail() function.
     $mail->isSMTP();
     // Sets the Gmail SMTP server
-    $mail->Host = 'smtp.gmail.com';          
+    $mail->Host = $_ENV['SMTP_HOST'];//'smtp.gmail.com';          
     // Enables SMTP authentication to securely log in to the SMTP server using provided credentials.
     $mail->SMTPAuth = true;
     // Credentials: username and password.
-    $mail->Username = 'emailaddress@gmail.com';      
-    $mail->Password = 'password';    
+    $mail->Username = $_ENV['SMTP_USER'];//'emailaddress@gmail.com';      
+    $mail->Password = $_ENV['SMTP_PASS'];//'password';    
     // Specifies the encryption protocol (TLS) to secure the connection between PHPMailer and the SMTP server.
     $mail->SMTPSecure = 'tls';
     // Sets SMTP Server Port 
-    $mail->Port = 587;
+    $mail->Port = $_ENV['SMTP_PORT'];//587;
     // Set the sender's email address and name
-    $mail->setFrom('sender@gmail.com', 'Sender');
+    $mail->setFrom($_ENV['MAIL_FROM'], 'Sender');//$mail->setFrom('sender@gmail.com', 'Sender');
     // Set the recipient's email address and name
-    $mail->addAddress('recipient@gmail.com', 'Recipient');
+    $mail->addAddress($_ENV['MAIL_TO'], 'Recipient');;//$mail->addAddress('recipient@gmail.com', 'Recipient');
     // Email content configuration
     $mail->isHTML(true);
     $mail->Subject = 'Test email sent with PHPMailer';
