@@ -1,23 +1,22 @@
-# Usar imagem oficial do PHP com Apache
-FROM php:8.1-apache
+# Usar PHP CLI
+FROM php:8.1-cli
 
-# Instalar dependências do Composer
+# Instalar dependências
 RUN apt-get update && apt-get install -y unzip git && rm -rf /var/lib/apt/lists/*
 
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copiar projeto para a pasta padrão do Apache
-COPY . /var/www/html/
+# Copiar o projeto
+WORKDIR /app
+COPY . /app
 
-# Instalar dependências do PHP via Composer
-WORKDIR /var/www/html
+# Instalar dependências via Composer
 RUN composer install --no-dev --optimize-autoloader
-
-# Habilitar rewrite (opcional, se usar URLs amigáveis)
-RUN a2enmod rewrite
 
 # Expor porta que o Render espera
 EXPOSE 10000
 
-# O Apache já é iniciado automaticamente na imagem, então não precisa de CMD
+# Start do PHP com shell (formato que Render reconhece)
+ENTRYPOINT ["sh", "-c"]
+CMD ["php -S 0.0.0.0:10000 -t ."]
