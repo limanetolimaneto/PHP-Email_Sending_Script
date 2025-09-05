@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$mail = new PHPMailer\PHPMailer\PHPMailer(true);
+$mail = new PHPMailer(true);
 
 try {
     // Sets PHPMailer to use SMTP protocol for sending emails instead of the default mail() function.
